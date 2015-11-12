@@ -13,7 +13,7 @@ values."
    dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '(`~/.spacemacs`/private/')
+   dotspacemacs-configuration-layer-path '("~/.spacemacs.d/private/")
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -67,8 +67,6 @@ This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
@@ -209,6 +207,8 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
   )
 
 (defun dotspacemacs/user-config ()
@@ -229,20 +229,18 @@ layers configuration. You are free to put any user code."
   (defun json-format ()
     (interactive)
     (save-excursion
-      (shell-command-on-region (mark) (point) "python -m json.tool" (buffer-name) t)
-      )
-    )
+      (shell-command-on-region (mark) (point) "python -m json.tool" (buffer-name) t)))
 
   (winner-mode 0)
   ;; WindMove
   (defun ignore-error-wrapper (fn)
-  "Funtion return new function that ignore errors.
-   The function wraps a function with `ignore-errors' macro."
-  (lexical-let ((fn fn))
-    (lambda ()
-      (interactive)
-      (ignore-errors
-        (funcall fn)))))
+    "Funtion return new function that ignore errors.
+     The function wraps a function with `ignore-errors' macro."
+    (lexical-let ((fn fn))
+      (lambda ()
+        (interactive)
+        (ignore-errors
+          (funcall fn)))))
 
   (global-set-key (kbd "C-c <left>")  (ignore-error-wrapper 'windmove-left))
   (global-set-key (kbd "C-c <right>") (ignore-error-wrapper 'windmove-right))
