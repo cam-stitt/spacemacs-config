@@ -25,6 +25,7 @@ values."
      ;; ----------------------------------------------------------------
      ;; auto-completion
      ;; better-defaults
+     osx
      auto-completion
      emacs-lisp
      git
