@@ -32,6 +32,8 @@ values."
      linum
      web-mode
      markdown
+     go
+     react
      ;; git
      ;; markdown
      ;; org
@@ -91,7 +93,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-night
+   dotspacemacs-themes '(stekene-dark
+                         sanityinc-tomorrow-night
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
@@ -104,8 +107,8 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    ;;dotspacemacs-default-font '("Source Code Pro"
-   dotspacemacs-default-font '("Ubuntu Mono"
-                               :size 16
+   dotspacemacs-default-font '("Roboto Mono"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -246,6 +249,9 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "C-c <right>") (ignore-error-wrapper 'windmove-right))
   (global-set-key (kbd "C-c <up>")    (ignore-error-wrapper 'windmove-up))
   (global-set-key (kbd "C-c <down>")  (ignore-error-wrapper 'windmove-down))
+
+  (global-linum-mode 1)
+  (git-gutter:linum-setup)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
