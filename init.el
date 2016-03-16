@@ -272,6 +272,7 @@ layers configuration. You are free to put any user code."
   ;; Org mode
   (setq org-todo-keywords
         '((sequence "TODO" "IN PROGRESS" "IN REVIEW" "|" "DONE" "DELEGATED")))
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
