@@ -34,6 +34,7 @@ values."
      go
      react
      org
+     yaml
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -66,6 +67,7 @@ This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
+  (add-to-list 'load-path "~/.spacemacs.d/")
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
@@ -90,7 +92,9 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(apropospriate-dark
+   dotspacemacs-themes '(wilson
+                         sanityinc-tomorrow-eighties
+                         apropospriate-dark
                          sanityinc-tomorrow-night
                          spacemacs-dark
                          spacemacs-light
@@ -104,7 +108,7 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    ;;dotspacemacs-default-font '("Source Code Pro"
-   dotspacemacs-default-font '("Anonymous Pro"
+   dotspacemacs-default-font '("Roboto Mono"
                                :size 14
                                :weight normal
                                :width normal
@@ -209,6 +213,7 @@ It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/"))
+  (setq-default exec-path-from-shell-variables '("GOPATH"))
   )
 
 (defun dotspacemacs/user-config ()
@@ -253,6 +258,20 @@ layers configuration. You are free to put any user code."
   ;; go
   (eldoc-mode 1)
   (setq gofmt-command "goimports")
+
+  ;; web-mode
+  (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+
+  ;; json m4
+  (add-to-list 'auto-mode-alist '("\\.json.m4\\'" . json-mode))
+
+  (autoload 'apib-mode "apib-mode"
+    "Major mode for editing API Blueprint files" t)
+  (add-to-list 'auto-mode-alist '("\\.apib\\'" . apib-mode))
+
+  ;; Org mode
+  (setq org-todo-keywords
+        '((sequence "TODO" "IN PROGRESS" "IN REVIEW" "|" "DONE" "DELEGATED")))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
