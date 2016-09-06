@@ -217,7 +217,8 @@ It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/"))
-  (setq-default exec-path-from-shell-variables '("GOPATH"))
+  (setq exec-path-from-shell-arguments '("-l"))
+;;  (setq-default exec-path-from-shell-variables '("GOPATH", "PATH"))
   )
 
 (defun dotspacemacs/user-config ()
