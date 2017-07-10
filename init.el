@@ -24,17 +24,23 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; better-defaults
+     themes-megapack
      auto-completion
      emacs-lisp
      git
-     js2
-     linum
-     web-mode
+     nlinum
+     html
      markdown
      go
      react
+     html
+     javascript
+     python
+     sql
      org
      yaml
+     docker
+     terraform
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -50,7 +56,7 @@ values."
                                       fringe-helper
                                       git-gutter
                                       git-gutter-fringe
-                                      dockerfile-mode
+                                      ;dockerfile-mode
                                       less-css-mode
                                       unbound)
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -91,11 +97,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-day
-                         material-light
-                         flatui
-                         apropospriate-light
-                         wilson
+   dotspacemacs-themes '(wilson
                          sanityinc-tomorrow-eighties
                          apropospriate-dark
                          sanityinc-tomorrow-night
@@ -110,9 +112,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   ;;dotspacemacs-default-font '("Source Code Pro"
-   dotspacemacs-default-font '("Roboto Mono"
-                               :size 14
+   dotspacemacs-default-font '("Ubuntu Mono derivative Powerline"
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -227,12 +228,18 @@ layers configuration. You are free to put any user code."
   (setq-default indent-tabs-mode nil)
   (show-paren-mode 1)
   (setq js-indent-level 2)
+  (setq-default
+   ;; js2-mode
+   js2-basic-offset 2
+   ;; web-mode
+   css-indent-offset 2
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-attr-indent-offset 2)
 
   ;; Git gutter
   (global-git-gutter-mode)
-
-  ;; Dockerfile
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
   (defun json-format ()
     (interactive)
@@ -255,7 +262,7 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "C-c <up>")    (ignore-error-wrapper 'windmove-up))
   (global-set-key (kbd "C-c <down>")  (ignore-error-wrapper 'windmove-down))
 
-  (global-linum-mode 1)
+  (global-nlinum-mode 1)
   (git-gutter:linum-setup)
 
   ;; go
