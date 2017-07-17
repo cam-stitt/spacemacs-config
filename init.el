@@ -32,7 +32,6 @@ values."
      html
      markdown
      go
-     react
      html
      javascript
      python
@@ -41,6 +40,7 @@ values."
      yaml
      docker
      terraform
+     react
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -269,8 +269,10 @@ layers configuration. You are free to put any user code."
   (eldoc-mode 1)
   (setq gofmt-command "goimports")
 
-  ;; web-mode
-  (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+
+  (with-eval-after-load 'web-mode
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil)))
+  ;;(add-to-list 'auto-mode-alist '("\\.spec.js\\'" . react-mode))
 
   ;; json m4
   (add-to-list 'auto-mode-alist '("\\.json.m4\\'" . json-mode))
@@ -282,6 +284,8 @@ layers configuration. You are free to put any user code."
   ;; Org mode
   (setq org-todo-keywords
         '((sequence "TODO" "IN PROGRESS" "IN REVIEW" "|" "DONE" "DELEGATED")))
+
+  (exec-path-from-shell-copy-env "PATH")
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
