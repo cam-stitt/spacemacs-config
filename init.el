@@ -229,7 +229,7 @@ layers configuration. You are free to put any user code."
   ;; Indentation/Paren
   (setq-default indent-tabs-mode nil)
   (show-paren-mode 1)
-  (setq js-indent-level 2)
+  ;(setq js-indent-level 2)
   (setq-default
    ;; js2-mode
    js2-basic-offset 2
@@ -273,7 +273,11 @@ layers configuration. You are free to put any user code."
 
 
   (with-eval-after-load 'web-mode
-    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil)))
+    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
+;  (with-eval-after-load 'web-mode
+;    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil)))
   ;;(add-to-list 'auto-mode-alist '("\\.spec.js\\'" . react-mode))
 
   ;; json m4
