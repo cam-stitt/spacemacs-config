@@ -308,6 +308,13 @@ layers configuration. You are free to put any user code."
   (setq ansible::vault-password-file "~/.vault-pass")
 
   (add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
+
+  (defun replace-rectangle-current-kill (start end)
+    "Replace the current rectangle with the latest kill"
+    (interactive "r")
+    (replace-rectangle start end (current-kill 0)))
+  
+  (global-set-key (kbd "C-x r C-y") 'replace-rectangle-current-kill)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
