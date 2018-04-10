@@ -217,6 +217,8 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
+  (require 'gnutls)
+  (add-to-list 'gnutls-trustfiles "/usr/local/etc/libressl/cert.pem")
   (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                            ("marmalade" . "https://marmalade-repo.org/packages/")
                            ("melpa" . "https://melpa.org/packages/")))
