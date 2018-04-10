@@ -114,7 +114,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Ubuntu Mono derivative Powerline"
+   dotspacemacs-default-font '("Inconsolata"
                                :size 16
                                :weight normal
                                :width normal
@@ -307,6 +307,13 @@ layers configuration. You are free to put any user code."
   (setq ansible::vault-password-file "~/.vault-pass")
 
   (add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
+
+  (defun replace-rectangle-current-kill (start end)
+    "Replace the current rectangle with the latest kill"
+    (interactive "r")
+    (replace-rectangle start end (current-kill 0)))
+  
+  (global-set-key (kbd "C-x r C-y") 'replace-rectangle-current-kill)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
