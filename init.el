@@ -42,7 +42,6 @@ values."
      ;; better-defaults
      emacs-lisp
      git
-     nlinum
      html
      markdown
      go
@@ -53,7 +52,6 @@ values."
      docker
      terraform
      react
-     c-c++
      themes-megapack
      ;; org
      ;; (shell :variables
@@ -61,18 +59,16 @@ values."
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      syntax-checking
-     ;; version-control
+     version-control
+     treemacs
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
-    '(
+   '(
       fill-column-indicator
-      fringe-helper
-      git-gutter
-      git-gutter-fringe
    )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -279,7 +275,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -320,6 +316,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq custom-file "~/.spacemacs.d/custom.el")
+  (load-file custom-file)
   )
 
 (defun dotspacemacs/user-config ()
@@ -329,7 +327,11 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (setq powerline-default-separator 'bar)
+  '(version-control :variables
+                    version-control-diff-tool 'diff-hl)
+  (global-diff-hl-mode 1)
+
+  ;(setq powerline-default-separator 'bar)
 
   (setq-default indent-tabs-mode nil)
   (show-paren-mode 1)
@@ -341,9 +343,10 @@ you should place your code here."
     web-mode-markup-indent-offset 2
     web-mode-css-indent-offset 2
     web-mode-code-indent-offset 2
-    web-mode-attr-indent-offset 2)
-
-  (global-git-gutter-mode)
+    web-mode-attr-indent-offset 2
+    web-mode-script-padding 2
+    web-mode-style-padding 2
+    web-mode-block-padding 2)
 
   (winner-mode 0)
   ;; WindMove
@@ -361,12 +364,13 @@ you should place your code here."
   (global-set-key (kbd "C-c <up>")    (ignore-error-wrapper 'windmove-up))
   (global-set-key (kbd "C-c <down>") (ignore-error-wrapper 'windmove-down))
 
-  (global-nlinum-mode 1)
-  (git-gutter:linum-setup)
-
   ;; go
-  (eldoc-mode 1)
+  (setq go-format-before-save t)
   (setq gofmt-command "goimports")
+  '(go :variables go-use-golangci-lint t)
+  '(go :variables godoc-at-point-function 'godoc-gogetdoc)
+
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
 
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
@@ -382,20 +386,5 @@ you should place your code here."
     (replace-rectangle start end (current-kill 0)))
 
   (global-set-key (kbd "C-x r C-y") 'replace-rectangle-current-kill)
-
-  (setq custom-file "~/.spacemacs.d/custom.el")
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (zenburn-theme zen-and-art-theme yapfify yaml-mode white-sand-theme web-mode web-beautify underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme terraform-mode hcl-mode tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme sql-indent spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode seti-theme scss-mode sass-mode reverse-theme rebecca-theme railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme orgit organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme nlinum-relative nlinum naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc markdown-mode majapahit-theme magit-gitflow madhat2r-theme lush-theme livid-mode skewer-mode simple-httpd live-py-mode light-soap-theme js2-refactor multiple-cursors js2-mode js-doc jinja2-mode jbeans-theme jazz-theme ir-black-theme inkpot-theme hy-mode heroku-theme hemisu-theme helm-pydoc helm-gitignore helm-css-scss helm-company helm-c-yasnippet hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme go-guru go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter gh-md gandalf-theme fuzzy fringe-helper flycheck-pos-tip pos-tip flycheck flatui-theme flatland-theme farmhouse-theme exotica-theme evil-magit magit git-commit with-editor espresso-theme emmet-mode dracula-theme dockerfile-mode docker json-mode tablist magit-popup docker-tramp json-snatcher json-reformat django-theme disaster darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-web web-completion-data company-tern dash-functional tern company-statistics company-go go-mode company-c-headers company-ansible company-anaconda company color-theme-sanityinc-tomorrow coffee-mode cmake-mode clues-theme clang-format cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet yasnippet apropospriate-theme anti-zenburn-theme ansible-doc ansible anaconda-mode pythonic ample-zen-theme ample-theme alect-themes afternoon-theme ac-ispell auto-complete color-theme-sanityinc-solarized ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
