@@ -369,6 +369,9 @@ you should place your code here."
   (setq gofmt-command "goimports")
   '(go :variables go-use-golangci-lint t)
   '(go :variables godoc-at-point-function 'godoc-gogetdoc)
+  (defun disable-aindent()
+    (clean-aindent-mode -1))
+  (add-hook 'go-mode-hook 'disable-aindent)
 
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
 
